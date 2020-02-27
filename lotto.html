@@ -1,0 +1,235 @@
+<html>
+    <head>
+      <meta charset="utf-8">
+      <title>Lotto</title>
+
+      <style type="text/css">
+      body, html {
+        font-family: montserrat, sans-serif;
+        background-color: #ffffff;
+        font-size: 20px;
+      }
+      #color-container {
+        width: 100%;
+      }
+      #spacing {
+        line-height: 1.5;
+      }
+      #luckyNum {
+        width: 5%;
+        padding: 5px;
+      }
+      #nums {
+        padding: 5px;
+      }
+      form {
+        margin: 0;
+      }
+      #resultsHeading {
+        background-color: #a8ffad;
+        height: 50px;
+        max-height: 50px;
+      }
+      div {
+        margin-block-start: 0em;
+        margin-block-end: 0em;
+     }
+     h2 {
+      margin-block-start: 0em;
+      margin-block-end: 0em;
+      background-color: #fffc9e;
+      margin-block-end: 0em;
+      height: 50px;
+      max-height: 50px;
+      padding-top: 10px;
+     }
+     #win {
+       padding-bottom: 20px;
+     }
+    </style>
+
+    </head>
+    <body>
+      <center>
+      <div id="top-container">
+        <h2> Welcome to Mass Lottery's “ Lucky for Life”! </h2>
+        <h3> Enter five numbers between 1-48 (separated by spaces).
+          <br> <br> Then, enter a lucky number between 1-18. </h3>
+        <br>
+        <form>
+        5 numbers:
+        <input type="text" id="nums" value="">
+        &nbsp;
+        Lucky number:
+        <input type="text" id="luckyNum" value="">
+        </form>
+        <br>
+        <br>
+        <button onclick="userInput()">Submit</button>
+        <br />
+        <br />
+      </div>
+        <div id="color-container">
+        <h2 id = "resultsHeading"> Press submit for your results... </h2>
+        <p id = "unsorted"> </p>
+        <div id = "spacing">
+        <div id = "lottonumbers"> Random Numbers: </div>
+        <div id = "luckyball"> Lucky Number:  </div>
+        <div id = "userslotto"> Your Entered Numbers: </div>
+        <div id = "usersluckyball"> Your Entered Luckyball: </div>
+        <div id = "win"> Your results: </div>
+        </div>
+      </div>
+      <script language="javascript">
+
+        // for user input
+        function userInput() {
+          // functions!
+        document.getElementById("resultsHeading").innerHTML = "Your results!";
+
+          var userArr;
+          var userLucky;
+          repeated = true;
+          // randomized govt array
+
+          while (repeated) { // while loop to catch repeated numbers
+            repeated = false;
+
+            var arr = new Array(5);
+            for(i = 0; i < arr.length; i++) {
+            arr[i] = Math.round(Math.floor(Math.random() * 48) + 1);
+            // between 1-48
+            }
+
+            // lucky ball govt
+            var lucky = Math.round(Math.floor(Math.random() * 18) + 1);
+
+
+            // SORT GOVT ARR
+            arr.sort(
+              function(a, b){
+              return a - b;
+              }
+            );
+
+            for (i = 1; i < 5; i++) {
+              if (arr[i] == arr[i-1]) {
+                repeated = true;
+                arr.splice(0, 6);
+                }
+              }
+            }
+            // console.log(arr);
+          for (var i = 0; i < 5; i++) {
+            document.getElementById("lottonumbers").innerHTML
+            += arr[i] + "&nbsp";
+          }
+
+          document.getElementById("luckyball").innerHTML += lucky + "&nbsp";
+
+
+          userArr = document.getElementById("nums").value;
+          // get user input of five numbers
+
+          var splitString = new Array(5);
+          splitString = userArr.split(" ");
+          // turning it into an array of numbers
+
+          for(i = 0; i < 5; i++) {
+            splitString[i] = parseInt(splitString[i], 10);
+          }
+
+          // sort the user's array of numbers
+          splitString.sort(
+            function(a, b){
+            return a - b;
+            }
+          );
+          //get user's luckyball input
+          var userLucky;
+          userLucky = document.getElementById('luckyNum').value;
+
+          //display users lotto numbers
+          for (var i = 0; i < 5; i++) {
+            document.getElementById("userslotto").innerHTML
+            += splitString[i] + "&nbsp";
+          }
+          //display user luckyball
+          document.getElementById("usersluckyball").innerHTML += userLucky +
+          "&nbsp";
+
+
+          // for results - need to know if the lucky number == govt lucky num
+          if (userLucky == lucky) {
+            // alert("ye!");
+            var luckycompare = 1; // true
+          } else {
+            luckycompare = 0; // false
+          }
+
+          var count = 0;
+          // compare the two arrays!
+          for (var i = 0; i < 5; i++) {
+            for (var j = 0; j < 5; j++) {
+
+              if (splitString[i] == arr[j]) {
+                count++;
+              }
+            }
+          }
+
+          // result conditionals
+          if (count == 5) {
+            if (luckycompare == 1) {
+              document.getElementById("win").innerHTML +=
+              "You won $7,000 a WEEK for LIFE!" + "&nbsp";
+            } else {
+              document.getElementById("win").innerHTML +=
+              "You won $25,000 a YEAR for LIFE!" + "&nbsp";
+            }
+          } else if (count == 4) {
+            if (luckycompare == 1) {
+              document.getElementById("win").innerHTML +=
+              "You won $5,000!" + "&nbsp";
+            } else {
+              document.getElementById("win").innerHTML +=
+              "You won $200!" + "&nbsp";
+            }
+          } else if (count == 3) {
+            if (luckycompare == 1) {
+              document.getElementById("win").innerHTML +=
+              "You won $150!" + "&nbsp";
+            } else {
+              document.getElementById("win").innerHTML +=
+              "You won $20!" + "&nbsp";
+            }
+          } else if (count == 2) {
+            if (luckycompare == 1) {
+              document.getElementById("win").innerHTML +=
+              "You won $25!" + "&nbsp";
+            } else {
+              document.getElementById("win").innerHTML +=
+              "You won $3!" + "&nbsp";
+            }
+          } else if (count == 1) {
+            if (luckycompare == 1) {
+              document.getElementById("win").innerHTML +=
+              "You won $6!" + "&nbsp";
+            } else {
+              document.getElementById("win").innerHTML +=
+              "You did not win today, try again next time!" + "&nbsp";
+             }
+          } else if (count == 0) {
+            if (luckycompare == 1) {
+              document.getElementById("win").innerHTML +=
+              "You won $4!" + "&nbsp";
+            } else {
+              document.getElementById("win").innerHTML +=
+              "You did not win today, try again next time!" + "&nbsp";
+            }
+          }
+        }
+        </script>
+      </center>
+    </body>
+</html>
