@@ -4,8 +4,22 @@
       <title>Lotto</title>
 
       <style type="text/css">
-      body {
+      body, html {
         font-family: montserrat, sans-serif;
+        background-color: #ffffff;
+        font-size: 20px;
+      }
+      h1 {
+        background-color: #ffea00;
+        margin-block-end: 0em;
+        height: 50px;
+        max-height: 50px;
+      }
+      #color-container {
+        width: 100%;
+      }
+      #spacing {
+        line-height: 1.5;
       }
       #luckyNum {
         width: 5%;
@@ -14,12 +28,28 @@
       #nums {
         padding: 5px;
       }
-      button {
-        padding: 5px;
-      }
       form {
         margin: 0;
       }
+      #resultsHeading {
+        background-color: #13ad28;
+        height: 50px;
+        max-height: 50px;
+      }
+      div {
+        margin-block-start: 0em;
+        margin-block-end: 0em;
+     }
+     h2 {
+      margin-block-start: 0em;
+      margin-block-end: 0em;
+
+      padding-top: 10px;
+     }
+     #win {
+       padding-bottom: 20px;
+     }
+
 
       </style>
 
@@ -28,34 +58,38 @@
     <body>
 
       <center>
-      <h1> Welcome to Mass Lottery's “ Lucky for Life”! </h1>
-      <h4> Enter five numbers between 1-48 (separated by spaces).
-        <br> <br> Then, enter a lucky number between 1-18. </h4>
-      <br>
-      <form>
-      5 numbers:
-      <input type="text" id="nums" value="">
-      &nbsp;
-      Lucky number:
-      <input type="text" id="luckyNum" value="">
-      </form>
-      <br>
-      <br>
+      <div id="top-container">
+        <h1> Welcome to Mass Lottery's “ Lucky for Life”! </h1>
+        <h3> Enter five numbers between 1-48 (separated by spaces).
+          <br> <br> Then, enter a lucky number between 1-18. </h3>
+        <br>
+        <form>
+        5 numbers:
+        <input type="text" id="nums" value="">
+        &nbsp;
+        Lucky number:
+        <input type="text" id="luckyNum" value="">
+        </form>
+        <br>
+        <br>
 
-      <button onclick="userInput()">Submit</button>
+        <button onclick="userInput()">Submit</button>
 
-      <br>
-      <br>
+        <br />
+        <br />
+      </div>
+        <div id="color-container">
+        <h2 id = "resultsHeading"> Press submit for your results... </h2>
+        <p id = "unsorted"> </p>
+        <div id = "spacing">
+        <div id = "lottonumbers"> Random Numbers: </div>
+        <div id = "luckyball"> Lucky Number:  </div>
 
-      <h2 id = "resultsHeading"> press submit for your results... </h2>
-      <p id = "unsorted"> </p>
-      <div id = "lottonumbers"> Random Numbers: </div>
-      <div id = "luckyball"> Lucky Number:  </div>
-
-      <div id = "userslotto"> Your Entered Numbers: </div>
-      <div id = "usersluckyball"> Your Entered Luckyball: </div>
-      <div id = "win"> Your results: </div>
-
+        <div id = "userslotto"> Your Entered Numbers: </div>
+        <div id = "usersluckyball"> Your Entered Luckyball: </div>
+        <div id = "win"> Your results: </div>
+        </div>
+      </div>
       <script language="javascript">
 
 
@@ -67,26 +101,36 @@
 
             var userArr;
             var userLucky;
-
+            repeated = true;
             // randomized govt array
-            var arr = new Array(5);
-            for(i = 0; i < arr.length; i++) {
-            arr[i] = Math.round(Math.floor(Math.random() * 48) + 1);
-            // between 1-48
-            }
-            console.log(arr);
 
+            while (repeated) {
+              repeated = false;
 
-            // lucky ball govt
-            var lucky = Math.round(Math.floor(Math.random() * 18) + 1);
-
-
-            // SORT GOVT ARR
-            arr.sort(
-              function(a, b){
-              return a - b;
+              var arr = new Array(5);
+              for(i = 0; i < arr.length; i++) {
+              arr[i] = Math.round(Math.floor(Math.random() * 48) + 1);
+              // between 1-48
               }
-            );
+
+              // lucky ball govt
+              var lucky = Math.round(Math.floor(Math.random() * 18) + 1);
+
+
+              // SORT GOVT ARR
+              arr.sort(
+                function(a, b){
+                return a - b;
+                }
+              );
+
+              for (i = 1; i < 5; i++) {
+                if (arr[i] == arr[i-1]) {
+                  repeated = true;
+                  arr.splice(0, 6);
+                }
+              }
+            }
             // console.log(arr);
             for (var i = 0; i < 5; i++) {
               document.getElementById("lottonumbers").innerHTML
@@ -171,7 +215,8 @@
               "You won $150!" + "&nbsp";
             } else {
               document.getElementById("win").innerHTML +=
-              "You won $20!" + "&nbsp";            }
+              "You won $20!" + "&nbsp";
+            }
           } else if (count == 2) {
             if (luckycompare == 1) {
               document.getElementById("win").innerHTML +=
@@ -198,45 +243,7 @@
             }
           }
         }
-
-
-
-
-
-
-
-        //
-        //   for (i = 0; i < userArr.length; i++) {
-        //     if (arr[i] == userArr[i]) {
-        //       count++;
-        //       console.log(count);
-        //     }
-        //   }
-
-
-
-
-
-
-
-
-
-    </script>
-
-    <br> <br>
-    <script language="javascript">
-        //sort them!
-
         </script>
-
-
-
-
-
-
-
-
       </center>
-
     </body>
 </html>
